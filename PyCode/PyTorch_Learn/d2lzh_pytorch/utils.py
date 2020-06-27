@@ -243,7 +243,7 @@ def train_ch5(net, train_iter, test_iter, batch_size, optimizer, device, num_epo
 
 
 # ########################## 5.6 #########################3
-def load_data_fashion_mnist(batch_size, resize=None, root='~/Datasets/FashionMNIST'):
+def load_data_fashion_mnist(batch_size, resize=None, root='/media/yumi/Datas/FashionMNIST'):
     """Download the fashion mnist dataset and then load into memory."""
     trans = []
     if resize:
