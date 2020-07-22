@@ -10,7 +10,7 @@ int main()
 {
     Eigen::Matrix3f rotationMatrix;
 
-    Eigen::Vector3f suctionDirectin(0.45611f, 0.0118419f, -0.889845f);
+    Eigen::Vector3f suctionDirectin(-0.26631f,-0.704208f,-0.658157f);
 
     direction2RotationMatrix(suctionDirectin, rotationMatrix);
 
@@ -20,7 +20,7 @@ int main()
     //参考:https://blog.csdn.net/weicao1990/article/details/86148828
     Eigen::Vector3f euler_angles = rotationMatrix.eulerAngles(2, 1, 0);
 
-    std::cout << "yaw(z) pitch(y) roll(x) = " << 180.0f*euler_angles.transpose()/3.14f << std::endl;
+    std::cout << "yaw(x) pitch(y) roll(z) = " << 180.0f*euler_angles.transpose()/3.14f << std::endl;
 
 
 
