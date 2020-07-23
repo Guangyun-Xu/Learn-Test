@@ -5,3 +5,6 @@
 *.user
 /CPPCode/rotation2RPY/build-rotation2RPY-Desktop_Qt_5_11_1_GCC_64bit-Debug/
 /CPPCode/rotation2RPY/build-rotation2RPY-Desktop_Qt_5_11_1_GCC_64bit-Debug/
+/CPPCode/PointTransform/build-PointTransform-Desktop_Qt_5_11_1_GCC_64bit-Debug/
+/CPPCode/PointTransform/build-PointTransform-Desktop_Qt_5_12_3_GCC_64bit-Debug/
+/CPPCode/rotation2RPY/build-rotation2RPY-Desktop_Qt_5_11_1_GCC_64bit-Debug/
