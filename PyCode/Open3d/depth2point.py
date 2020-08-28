@@ -1,9 +1,10 @@
+# pip install open3d-python==0.5
 import open3d as o3d
 __all__ = [o3d]
 print(o3d.__version__)
 
 import numpy as np
-depth_image_path = "/home/yumi/Project/Simulation/BlenderProc/test_depth/depth_1.png"
+depth_image_path = "/home/yumi/Project/Simulation/BlenderProc/test_depth/depth_2.png"
 depth_raw = o3d.read_image(depth_image_path)
 image_width = 640
 image_height = 480
@@ -35,4 +36,12 @@ pcd = o3d.create_point_cloud_from_depth_image(
     depth_scale=depth_scale, depth_trunc=depth_trunc, stride=int(1))
 if not color:
     pcd.paint_uniform_color([0, 255, 0])
-o3d.visualization.draw_geometries([pcd])
+
+camera_coordinate_frame = o3d.create_mesh_coordinate_frame(size=100)
+H_camera_in_base = np.array([[0.010455, -0.999942, 0.002433, 393.806],
+                             [-0.986629, -0.009921, 0.162681, 274.026],
+                             [-0.162648, -0.004102, -0.986676, 1340.7],
+                             [0, 0, 0, 1]])
+camera_coordinate_frame.transform(H_camera_in_base)
+base_coordinate_frame = o3d.create_mesh_coordinate_frame(size=100, origin=[0,0,0])
+o3d.visualization.draw_geometries([base_coordinate_frame, pcd, camera_coordinate_frame])
