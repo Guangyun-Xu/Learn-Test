@@ -4,15 +4,16 @@ __all__ = [o3d]
 print(o3d.__version__)
 
 import numpy as np
-depth_image_path = "/home/yumi/Project/Simulation/BlenderProc/test_depth/depth_2.png"
-depth_raw = o3d.read_image(depth_image_path)
-image_width = 640
-image_height = 480
-fx = 572.4114
-fy = 573.57043
 
-cx = 325.2611
-cy = 242.04899
+depth_image_path = "/home/yumi/Project/Simulation/BlenderProc/test_depth/depth_3.png"
+depth_raw = o3d.read_image(depth_image_path)
+image_width = 1032
+image_height = 772
+fx = 1122.375
+fy = 1122.375
+
+cx = 514.53
+cy = 406.8355
 
 # cx = 256
 # cy = 256
@@ -38,10 +39,12 @@ if not color:
     pcd.paint_uniform_color([0, 255, 0])
 
 camera_coordinate_frame = o3d.create_mesh_coordinate_frame(size=100)
-H_camera_in_base = np.array([[0.010455, -0.999942, 0.002433, 393.806],
-                             [-0.986629, -0.009921, 0.162681, 274.026],
-                             [-0.162648, -0.004102, -0.986676, 1340.7],
+H_base_in_camera = np.array([[0.0101817,	-0.985716,	-0.16811, 393.806],
+                             [-0.999944,	-0.00953149,	-0.00467393, 274.026],
+                             [0.00300482,	0.168148,	-0.985757, 1340.7],
                              [0, 0, 0, 1]])
-camera_coordinate_frame.transform(H_camera_in_base)
-base_coordinate_frame = o3d.create_mesh_coordinate_frame(size=100, origin=[0,0,0])
+camera_coordinate_frame.transform(H_base_in_camera)
+base_coordinate_frame = o3d.create_mesh_coordinate_frame(size=1000, origin=[0,0,0])
 o3d.visualization.draw_geometries([base_coordinate_frame, pcd, camera_coordinate_frame])
+ply_path = depth_image_path[:-4] + ".ply"
+o3d.write_point_cloud(ply_path,pcd)
