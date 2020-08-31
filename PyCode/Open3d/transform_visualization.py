@@ -26,7 +26,7 @@ coordinate2 = o3d.create_mesh_coordinate_frame(size=300)
 # r_xyz = np.array([180.272, 9.67795, 270.592]) # camera in base pose
 # r_xyz = r_xyz/180*math.pi
 R_1 = np.array([[0.010182, -0.999944, 0.003005],
-                [-0.985716, -0.009532, -0.109532],
+                [-0.985716, -0.009532, 0.168148],
                 [-0.168110, -0.004674, -0.985757]])
 T_1 = np.array([393.100000, -280.894000, 1338.030000])
 H_1 = t3d.affines.compose(T_1, R_1, Z)  # camera in base pose
