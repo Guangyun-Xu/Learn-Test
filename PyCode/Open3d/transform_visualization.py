@@ -36,8 +36,8 @@ print("camera in base matrix:{}".format(H_1))
 print("rx_1, ry_1, rz_1:{}".format(r_xyz_1))
 coordinate1.transform(H_1)
 
-R_2in1 = np.array([[0, -1, 0],
-                   [-1, 0, 0],
+R_2in1 = np.array([[1, 0, 0],
+                   [0, 1, 0],
                    [0, 0, -1]])
 R_2 = R_1.dot(R_2in1)
 H_2 = t3d.affines.compose(T_1, R_2, Z)
@@ -45,4 +45,5 @@ coordinate2.transform(H_2)
 
 o3d.visualization.draw_geometries([coordinate1, base_coordinate, coordinate2])
 rx_2, ry_2, rz_2 = t3d.euler.mat2euler(R_2, axes='sxyz')
-print("rx_2, ry_2, rz_2:{},{},{}".format(rx_2, ry_2, rz_2))
+r_xyz_2 = np.array([rx_2, ry_2, rz_2])/math.pi*180
+print("rx_2, ry_2, rz_2:{}".format(r_xyz_2))
