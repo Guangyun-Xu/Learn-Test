@@ -41,14 +41,9 @@ int main()
                 grasp_mask_names.push_back(mask_name);
                 grasp_scores.push_back(score);
                 mask_centroid_x.push_back(centroid_x);
+
             }
 
-
-
-
-            // char const* grasp_name =  scene_data.get("grasp_name", "UTF-8").asCString();
-            // std::string grasp_name = scene_data.get("grasp_name", "UTF-8").asString();
-            // std::cout << grasp_name << "\n" << std::endl;
 
         }
     }
