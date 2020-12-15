@@ -39,45 +39,56 @@ def main():
     unit = 'mm'
 
     # get mesh list
-    mesh_folder_dir = "/media/yumi/Datas/Mesh/grasp_mesh_model/original_file/vv_finish_stl"
+    mesh_folder_dir = "/home/yumi/Datas/mesh/01/o3d_vis"
     mesh_list = os.listdir(mesh_folder_dir)
     # print(mesh_list)
 
-    suffix = '.stl'
+    # suffix = '.stl'
     for mesh_file in mesh_list:
-        if (suffix in mesh_file):
-            # load mesh and visualize
-            mesh_path = os.path.join(mesh_folder_dir, mesh_file)
+        # load mesh and visualize
+        mesh_path = os.path.join(mesh_folder_dir, mesh_file)
 
+        mesh_path_string = str(mesh_path)
+        if ".stl" in mesh_path_string:
             mesh = trimesh.load_mesh(mesh_path)
             mesh.export(mesh_path.replace('.stl', '.ply'))
             mesh_o3d = o3d.read_triangle_mesh(mesh_path.replace('.stl', '.ply'))
-            print(mesh_o3d)
+        else:
+            mesh_o3d = o3d.read_triangle_mesh(mesh_path)
 
-            # unit conversion (m -> mm)
-            max_bound = mesh_o3d.get_max_bound()
-            if ((unit == 'mm') & (max_bound[0] < 1)):
-                R = np.identity(3)
-                T = np.zeros(3)
-                Z = [1000.0, 1000.0, 1000.0]
-                H = t3d.affines.compose(T, R, Z)
-                mesh_o3d.transform(H)
+        print("mesh name:{}".format(mesh_file))
 
-            # draw object's bounding box
-            new_mesh_bound = mesh_o3d.get_max_bound()
-            color = [1, 0, 0]
-            object_bbox = bounding_box(new_mesh_bound, color)
+        # unit conversion (m -> mm)
+        max_bound = mesh_o3d.get_max_bound()
+        if ((unit == 'mm') & (max_bound[0] < 1)):
+            R = np.identity(3)
+            T = np.zeros(3)
+            Z = [1000.0, 1000.0, 1000.0]
+            H = t3d.affines.compose(T, R, Z)
+            mesh_o3d.transform(H)
 
-            # visualization, x, y, z axis will be rendered as red, green, and blue
-            base_coordinate = o3d.create_mesh_coordinate_frame(size=50)
+        if ((unit == 'cm') & (max_bound[0] < 100)):
+            R = np.identity(3)
+            T = np.zeros(3)
+            Z = [100.0, 100.0, 100.0]
+            H = t3d.affines.compose(T, R, Z)
+            mesh_o3d.transform(H)
 
-            # reference bbox
-            reference_bound = [50, 50, 50]
-            reference_color = [0, 1, 0]
-            reference_bbox = bounding_box(reference_bound, reference_color)
+        # draw object's bounding box
+        new_mesh_bound = mesh_o3d.get_max_bound()
+        color = [1, 0, 0]
+        object_bbox = bounding_box(new_mesh_bound, color)
 
+        # visualization, x, y, z axis will be rendered as red, green, and blue
+        base_coordinate = o3d.create_mesh_coordinate_frame(size=50)
 
-            o3d.visualization.draw_geometries([reference_bbox, mesh_o3d, base_coordinate, object_bbox])
+        # reference bbox
+        reference_bound = [50, 50, 50]
+        reference_color = [0, 1, 0]
+        reference_bbox = bounding_box(reference_bound, reference_color)
+
+        o3d.visualization.draw_geometries([reference_bbox, mesh_o3d, base_coordinate, object_bbox])
+
 
 if __name__ == '__main__':
     main()
